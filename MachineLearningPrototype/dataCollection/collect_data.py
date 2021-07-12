@@ -70,27 +70,27 @@ def store_issue_details(issue, repo, db):
 	issue_quoted_jenkins_links = content_extracted[0]
 	issue_quoted_test_names = content_extracted[1]
 	if issue_quoted_jenkins_links != []:
-    	issue_details['issue_quoted_jenkins_links'] = issue_quoted_jenkins_links
+    		issue_details['issue_quoted_jenkins_links'] = issue_quoted_jenkins_links
 	if issue_quoted_test_names != []:
-    	issue_details['issue_quoted_test_names'] = issue_quoted_test_names
+    		issue_details['issue_quoted_test_names'] = issue_quoted_test_names
 
 	if (jenkins_links and testnames):
 		path_list = []
-        for link in jenkins_links:
-            for test in test_names:
-                new_string = link.split('/')
-                final_string = ''.join(new_string)
-                issue_uid2 = f'{repo_name}_{issue_number}_{final_string}_{test}.txt'
-                jenkins_output_path = f'./data/GitHubData/JenkinsOutput/{issue_uid2}'
+		for link in jenkins_links:
+			    for test in test_names:
+				new_string = link.split('/')
+				final_string = ''.join(new_string)
+				issue_uid2 = f'{repo_name}_{issue_number}_{final_string}_{test}.txt'
+				jenkins_output_path = f'./data/GitHubData/JenkinsOutput/{issue_uid2}'
 
 				if os.path.isfile(issue_uid2):
-                    path_list.append(jenkins_output_path)
-				
+				    	path_list.append(jenkins_output_path)
+
 
 				else:
-                    trss_jenkins_output = query_trss_for_jenkins_output(link, test)
-                    if trss_jenkins_output:
-                        store_on_fs(trss_jenkins_output, jenkins_output_path)
+				    	trss_jenkins_output = query_trss_for_jenkins_output(link, test)
+				    	if trss_jenkins_output:
+						store_on_fs(trss_jenkins_output, jenkins_output_path)
 						path_list.append(jenkins_output_path)
                         
 		if path_list:
